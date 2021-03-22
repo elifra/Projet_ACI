@@ -9,8 +9,8 @@ images = os.listdir("D:\Docs\Documents\Etudes\ESIR_2\ACI\Projet\dataset")
 
 # read original image, in full color, based on command
 # line argument
-image = skimage.io.imread(fname="dataset\\"+images[10])
-print(image.shape)
+image = skimage.io.imread(fname="dataset\\"+images[1000])
+print("Taille de l'image : " + str(image.shape))
 # display the image
 viewer = ImageViewer(image)
 viewer.show()
@@ -26,10 +26,10 @@ for channel_id, c in zip(channel_ids, colors):
     histogram, bin_edges = np.histogram(
         image[:, :, channel_id], bins=256, range=(0, 255)
     )
-    nbValeurs = 0
-    for i in histogram:
-        nbValeurs = nbValeurs+i
-    print("Nombres de valeurs histo : " + str(nbValeurs))
+    #nbValeurs = 0
+    #for i in histogram:
+    #    nbValeurs = nbValeurs+i
+    #print("Nombres de valeurs histo : " + str(nbValeurs))
     canal = image[:, :, channel_id]
     viewer = ImageViewer(canal)
     viewer.show()
