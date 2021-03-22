@@ -1,4 +1,5 @@
 import os
+import pandas
 
 #Création du fichier dataset
 tab_data = open("datas.txt", "w")
@@ -42,5 +43,9 @@ print("Nombre de classes cloudy : " + str(nb0))
 print("Nombre de classes rain : " + str(nb1))
 print("Nombre de classes shine : " + str(nb2))
 print("Nombre de classes sunrise : " + str(nb3))
+
+D = pandas.read_table("datas.txt",delimiter="\n",header=0)
+print(D.head(1125))
+print(D.shape)
 
 tab_data.close()
