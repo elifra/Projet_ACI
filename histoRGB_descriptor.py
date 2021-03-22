@@ -5,7 +5,6 @@ from skimage.viewer import ImageViewer
 from matplotlib import pyplot as plt
 
 images = os.listdir("D:\Docs\Documents\Etudes\ESIR_2\ACI\Projet\dataset")
-os.chdir("dataset")
 
 # read original image, in full color, based on command
 # line argument
