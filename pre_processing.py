@@ -1,11 +1,10 @@
 import os
 
 #Création du fichier dataset
-tab_data = open("dataset.txt", "w")
+tab_data = open("datas.txt", "w")
 
 #Stockage du jeu de données
 images = os.listdir("D:\Docs\Documents\Etudes\ESIR_2\ACI\Projet\dataset")
-
 ids = [] #tableau des id --> noms des images simplifiés
 labels = [] #tableau des labels
 
