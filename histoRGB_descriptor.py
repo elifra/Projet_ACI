@@ -1,7 +1,7 @@
 import sys
 import skimage.io
-import skimage.viewer
 import os
+from skimage.viewer import ImageViewer
 from matplotlib import pyplot as plt
 
 images = os.listdir("D:\Docs\Documents\Etudes\ESIR_2\ACI\Projet\dataset")
@@ -12,5 +12,5 @@ os.chdir("dataset")
 image = skimage.io.imread(fname=images[0])
 
 # display the image
-viewer = skimage.viewer(image)
+viewer = ImageViewer(image)
 viewer.show()
