@@ -9,21 +9,22 @@ images = os.listdir("D:\Docs\Documents\Etudes\ESIR_2\ACI\Projet\dataset")
 
 # read original image, in full color, based on command
 # line argument
-image = skimage.io.imread(fname="dataset\\"+images[1000])
+image = skimage.io.imread(fname="dataset\\"+images[268])
 print("Taille de l'image : " + str(image.shape))
 # display the image
-viewer = ImageViewer(image)
-viewer.show()
+#viewer = ImageViewer(image)
+#viewer.show()
 
 # tuple to select colors of each channel line
 colors = ("r", "g", "b")
 channel_ids = (0, 1, 2)
 
+histos = []
 for i in range(len(images)):
     # create the histogram plot, with three lines, one for
     # each color
     plt.xlim([0, 256])
-    histos = []
+    image = skimage.io.imread(fname="dataset\\"+images[i])
     for channel_id, c in zip(channel_ids, colors):
         histogram, bin_edges = np.histogram(
             image[:, :, channel_id], bins=256, range=(0, 255)
@@ -41,3 +42,5 @@ for i in range(len(images)):
         # plt.ylabel("Pixels")
         # plt.title(c)
         # plt.show()
+
+print(len(histos))

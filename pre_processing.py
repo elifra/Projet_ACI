@@ -1,5 +1,5 @@
 import os
-import pandas
+import numpy as np
 
 #Création du fichier dataset
 tab_data = open("datas.txt", "w")
@@ -9,6 +9,7 @@ images = os.listdir("D:\Docs\Documents\Etudes\ESIR_2\ACI\Projet\dataset")
 ids = [] #tableau des id --> noms des images simplifiés
 labels = [] #tableau des labels
 
+print("Nombre d'images = " + str(len(images)))
 identifiant = 1
 for i in range(len(images)):
     ids.append(identifiant)
@@ -21,6 +22,9 @@ for i in range(len(images)):
     elif "shine" in images[i]:
         tab_data.write(images[i]+"  2\n")
         labels.append("2")
+    elif "sunrise" in images[i] and i==len(images)-1:
+        tab_data.write(images[i]+"  3")
+        labels.append("3")
     elif "sunrise" in images[i]:
         tab_data.write(images[i]+"  3\n")
         labels.append("3")
@@ -44,8 +48,12 @@ print("Nombre de classes rain : " + str(nb1))
 print("Nombre de classes shine : " + str(nb2))
 print("Nombre de classes sunrise : " + str(nb3))
 
-D = pandas.read_table("datas.txt",delimiter="\n",header=0)
-print(D.head(1125))
-print(D.shape)
+tab_data_lecture = open("datas.txt", "r")
+lines = tab_data_lecture.readlines()
+print("Nombre de lignes = " + str(len(lines)))
+
+table = np.loadtxt("datas.txt", dtype="str")
+print(table[:1123])
+print("Taille de la table = " + str(table.shape))
 
 tab_data.close()
