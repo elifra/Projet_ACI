@@ -9,7 +9,7 @@ images = os.listdir("D:\Docs\Documents\Etudes\ESIR_2\ACI\Projet\dataset")
 ids = [] #tableau des id --> noms des images simplifiés
 labels = [] #tableau des labels
 
-print("Nombre d'images = " + str(len(images)))
+#print("Nombre d'images = " + str(len(images)))
 identifiant = 1
 for i in range(len(images)):
     ids.append(identifiant)
@@ -32,6 +32,7 @@ for i in range(len(images)):
 
 tab_data.close()
 
+"""
 nb0 = 0
 nb1 = 0
 nb2 = 0
@@ -54,7 +55,9 @@ tab_data_lecture = open("datas.txt", "r")
 lines = tab_data_lecture.readlines()
 print("Nombre de lignes = " + str(len(lines)))
 tab_data_lecture.close()
-
+"""
 table = np.loadtxt("datas.txt", dtype="str")
+"""
 print(table[:1123])
 print("Taille de la table = " + str(table.shape))
+"""
