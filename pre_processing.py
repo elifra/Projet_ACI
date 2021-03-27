@@ -30,6 +30,8 @@ for i in range(len(images)):
         labels.append("3")
     identifiant = identifiant+1
 
+tab_data.close()
+
 nb0 = 0
 nb1 = 0
 nb2 = 0
@@ -51,9 +53,8 @@ print("Nombre de classes sunrise : " + str(nb3))
 tab_data_lecture = open("datas.txt", "r")
 lines = tab_data_lecture.readlines()
 print("Nombre de lignes = " + str(len(lines)))
+tab_data_lecture.close()
 
 table = np.loadtxt("datas.txt", dtype="str")
 print(table[:1123])
 print("Taille de la table = " + str(table.shape))
-
-tab_data.close()
