@@ -22,8 +22,8 @@ def createFileDescripteurHisto() :
     histos = d_histo.calculHistoRGB()
 
     table_data_descripteurRGB.write("id   ")
-    for i in range(768):
-        if i==767 : table_data_descripteurRGB.write("x" + str(i) + "\n")
+    for i in range(769):
+        if i==768 : table_data_descripteurRGB.write("label" + "\n")
         else : table_data_descripteurRGB.write("x" + str(i) + "   ")
     
     indHisto = 0
@@ -37,8 +37,8 @@ def createFileDescripteurHisto() :
         for g in range(len(histoCourantG)) :
             table_data_descripteurRGB.write(str(histoCourantG[g]) + "   ")
         for b in range(len(histoCourantB)) :
-            if b==len(histoCourantB)-1 and i<len(pre_processing.images)-1: table_data_descripteurRGB.write(str(histoCourantB[b]) + "\n")
-            else : table_data_descripteurRGB.write(str(histoCourantB[b]) + "   ")
+            if b==len(histoCourantB)-1 and i<len(pre_processing.images)-1: table_data_descripteurRGB.write(str(histoCourantB[b]) + "   " + str(pre_processing.labels[i]) + "\n")
+            else : table_data_descripteurRGB.write(str(histoCourantB[b]) + "   " + str(pre_processing.labels[i]))
         indHisto = indHisto + 3
     
     table_data_descripteurRGB.close()
