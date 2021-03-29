@@ -21,6 +21,11 @@ def createFileDescripteurHisto() :
     #On récupère les histogrammes RGB calculés pour chaque image
     histos = d_histo.calculHistoRGB()
 
+    table_data_descripteurRGB.write("id   ")
+    for i in range(768):
+        if i==767 : table_data_descripteurRGB.write("x" + str(i) + "\n")
+        else : table_data_descripteurRGB.write("x" + str(i) + "   ")
+    
     indHisto = 0
     for i in range(len(pre_processing.images)) :
         table_data_descripteurRGB.write(str(pre_processing.ids[i]) + "   ")
@@ -32,7 +37,7 @@ def createFileDescripteurHisto() :
         for g in range(len(histoCourantG)) :
             table_data_descripteurRGB.write(str(histoCourantG[g]) + "   ")
         for b in range(len(histoCourantB)) :
-            if b==len(histoCourantB)-1 and i<=len(pre_processing.images): table_data_descripteurRGB.write(str(histoCourantB[b]) + "\n")
+            if b==len(histoCourantB)-1 and i<len(pre_processing.images)-1: table_data_descripteurRGB.write(str(histoCourantB[b]) + "\n")
             else : table_data_descripteurRGB.write(str(histoCourantB[b]) + "   ")
         indHisto = indHisto + 3
     
@@ -43,5 +48,5 @@ if __name__ == "__main__":
     createFileDescripteurHisto()
     
     table_descripteurRGB = np.loadtxt("descripteur_histoRGB.txt", dtype="str")
-    print(table_descripteurRGB[:1123])
+    print(table_descripteurRGB[:1124])
     print("Taille de la table = " + str(table_descripteurRGB.shape))

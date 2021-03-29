@@ -10,6 +10,9 @@ ids = [] #tableau des id --> noms des images simplifiés
 labels = [] #tableau des labels
 
 #print("Nombre d'images = " + str(len(images)))
+
+tab_data.write("id  label\n")
+
 identifiant = 1
 for i in range(len(images)):
     ids.append(identifiant)
