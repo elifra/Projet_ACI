@@ -14,19 +14,19 @@ identifiant = 1
 for i in range(len(images)):
     ids.append(identifiant)
     if "cloudy" in images[i]:
-        tab_data.write(images[i]+"  0\n")
+        tab_data.write(str(ids[i])+"  0\n")
         labels.append("0")
     elif "rain" in images[i]:
-        tab_data.write(images[i]+"  1\n")
+        tab_data.write(str(ids[i])+"  1\n")
         labels.append("1")
     elif "shine" in images[i]:
-        tab_data.write(images[i]+"  2\n")
+        tab_data.write(str(ids[i])+"  2\n")
         labels.append("2")
     elif "sunrise" in images[i] and i==len(images)-1:
-        tab_data.write(images[i]+"  3")
+        tab_data.write(str(ids[i])+"  3")
         labels.append("3")
     elif "sunrise" in images[i]:
-        tab_data.write(images[i]+"  3\n")
+        tab_data.write(str(ids[i])+"  3\n")
         labels.append("3")
     identifiant = identifiant+1
 
