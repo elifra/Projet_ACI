@@ -23,14 +23,14 @@ def createFileDescripteurHisto() :
     #On récupère les histogrammes RGB calculés pour chaque image
     histos = d_histo.calculHistoRGB()
 
-    table_data_descripteurRGB.write("id   ")
+    #table_data_descripteurRGB.write("id   ")
     for i in range(769):
         if i==768 : table_data_descripteurRGB.write("label" + "\n")
         else : table_data_descripteurRGB.write("x" + str(i) + "   ")
     
     indHisto = 0
     for i in range(len(pre_processing.images)) :
-        table_data_descripteurRGB.write(str(pre_processing.ids[i]) + "   ")
+        #table_data_descripteurRGB.write(str(pre_processing.ids[i]) + "   ")
         histoCourantR = histos[indHisto]
         histoCourantG = histos[indHisto+1]
         histoCourantB = histos[indHisto+2]
