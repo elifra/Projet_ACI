@@ -12,6 +12,8 @@ from statistics import mean
 import pre_processing
 import histoRGB_descriptor as d_histo
 
+from sklearn.linear_model import LogisticRegression
+
 table_data = pre_processing.table
 
 def createFileDescripteurHisto() :
