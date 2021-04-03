@@ -30,7 +30,7 @@ table(data_histoRGB$label)
 nall = nrow(data_histoRGB) #total number of rows in data
 ntrain = floor(0.7 * nall) # number of examples (rows) for train: 70% (vous pouvez changer en fonction des besoins)
 ntmp = nall - ntrain 
-nvalid = floor(0.5*ntmp) # number of examples for test: 15%
+nvalid = floor(0.5*ntmp) # number of examples for valid: 15%
 ntest = ntmp - nvalid # number of examples for test: 15% restant
 
 set.seed(20) # choix d'une graine pour le tirage alÃ©atoire
@@ -48,10 +48,10 @@ print(nrow(histoRGB_test))
 tr = rpart(label~., data = histoRGB_app, control = list(minbucket = 1,cp = 0, minsplit = 1))
 rpart.plot(tr, extra = 1)
 
-predictionCorecte = sum(predict(tr, histoRGB_test, type = "vector")==histoRGB_test[,769])
+predictionCorecte = sum(predict(tr, histoRGB_test, type = "class")==histoRGB_test[,769])
 print(predictionCorecte)
 
-prediction = predict(tr, histoRGB_test, type = 'vector')
+prediction = predict(tr, histoRGB_test, type = 'class')
 #print(prediction)
 
 matConfusion_arbre=table(histoRGB_test$label, prediction,dnn=list('actual','predicted'))
@@ -65,10 +65,10 @@ for (val in  rev(tr$cptable[,1])){
   print("valeur de cp : ")
   print(val)
   tr_elague = prune(tr, cp = val)
-  rpart.plot(tr_elague, extra = 1)
+  rpart.plot(tr_elague, extra = 1, box.palette = "Blues")
   
   #Apprentissage
-  predictionCorecte = sum(predict(tr_elague, histoRGB_app, type = "vector")==histoRGB_app[,769])
+  predictionCorecte = sum(predict(tr_elague, histoRGB_app, type = "class")==histoRGB_app[,769])
   print("nombre de lignes de l'ensemble d'apprentissage")
   print(nrow(histoRGB_app))
   print("nombre de bonnes prédictions de cet arbre sur l'ensemble d'apprentissage : ")
@@ -76,10 +76,20 @@ for (val in  rev(tr$cptable[,1])){
   print("")
   
   #Validation
-  predictionCorecte = sum(predict(tr_elague, histoRGB_val, type = "vector")==histoRGB_val[,769])
+  predictionCorecte = sum(predict(tr_elague, histoRGB_val, type = "class")==histoRGB_val[,769])
   print("nombre de lignes de l'ensemble de validation")
   print(nrow(histoRGB_val))
   print("nombre de bonnes prédictions de cet arbre sur l'ensemble de validation : ")
   print(predictionCorecte)
   print("")
 }
+
+# ----- Estimation de l'erreur de généralisation
+
+tr_elague = prune(tr, cp = 0.009398496) 
+rpart.plot(tr_elague, extra = 1)
+print("Mauvaises prédictions : ")
+mauvaisesPredictions = sum(predict(tr_elague, histoRGB_test, type = "class")!=histoRGB_test[,769])
+print(mauvaisesPredictions)
+print("Erreur de Generalisation : ")
+print(mauvaisesPredictions/nrow(histoRGB_test))

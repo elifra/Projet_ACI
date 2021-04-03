@@ -40,7 +40,8 @@ def createFileDescripteurHisto() :
             table_data_descripteurRGB.write(str(histoCourantG[g]) + "   ")
         for b in range(len(histoCourantB)) :
             if b==len(histoCourantB)-1 and i<len(pre_processing.images)-1: table_data_descripteurRGB.write(str(histoCourantB[b]) + "   " + str(pre_processing.labels[i]) + "\n")
-            else : table_data_descripteurRGB.write(str(histoCourantB[b]) + "   " + str(pre_processing.labels[i]))
+            elif b==len(histoCourantB)-1 and i==len(pre_processing.images)-1 : table_data_descripteurRGB.write(str(histoCourantB[b]) + "   " + str(pre_processing.labels[i]))
+            else : table_data_descripteurRGB.write(str(histoCourantB[b]) + "   ")
         indHisto = indHisto + 3
     
     table_data_descripteurRGB.close()
