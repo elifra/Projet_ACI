@@ -174,6 +174,9 @@ print("Erreur de Generalisation : ")
 print(mauvaisesPredictions/nrow(SIFT_test))
 
 
+
+
+
 #----------------------------------------------------------
 # Deuxième partie : Apprentissage par Random Forest
 #----------------------------------------------------------
@@ -204,7 +207,10 @@ histoRGB_test = data_histoRGB[index[(ntrain+1):(ntrain+ntest)],] # création du j
 print(nrow(histoRGB_app))
 print(nrow(histoRGB_test))
 
-# ---------- Construction de la foret (3 arbres)
+# -----------------------------------------------
+# ---------- Construction de la foret (1 arbres)
+#------------------------------------------------
+
 labels = as.factor(histoRGB_app$label)
 foret = randomForest(x = histoRGB_app, y = labels, ntree = 1, norm.votes=FALSE)
 
@@ -224,3 +230,88 @@ print(mauvaisesPredictions/nrow(histoRGB_app))
 mauvaisesPredictions = sum(predict(foret, histoRGB_test)!=histoRGB_test$label)
 print("Erreur réelle")
 print(mauvaisesPredictions/nrow(histoRGB_test))
+
+# -----------------------------------------------
+# ---------- Construction de la foret (n arbres)
+#------------------------------------------------
+
+nbTree <- c(2,3,4,5,6,7,8,9,10)
+for(n in nbTree) {
+  print("Nombre d'arbres")
+  print(n)
+  foret = randomForest(x = histoRGB_app, y = labels, ntree = n, norm.votes=FALSE)
+  
+  # ---------- Calcul erreur empirique et réelle
+  mauvaisesPredictions = sum(predict(foret, histoRGB_app)!=histoRGB_app$label)
+  print("Erreur empirique")
+  print(mauvaisesPredictions/nrow(histoRGB_app))
+  
+  mauvaisesPredictions = sum(predict(foret, histoRGB_test)!=histoRGB_test$label)
+  print("Erreur réelle")
+  print(mauvaisesPredictions/nrow(histoRGB_test))
+}
+
+  #------------------------------
+  # Descripteur : SIFT
+  #------------------------------
+
+data_SIFT = read.table("./data_Projet/descripteur_SIFT.txt", header = T)
+table(data_SIFT$label)
+
+# ---------- Separation Apprentissage/Validation/Test
+
+nall = nrow(data_SIFT) #total number of rows in data
+ntrain = floor(0.7 * nall) # number of rows for train: 70% (vous pouvez changer en fonction des besoins)
+ntest = nall - ntrain # number of rows for test: le reste
+
+set.seed(20) # choix d une graine pour le tirage aléatoire
+index = sample(nall) # permutation aléatoire des nombres 1, 2, 3 , ... nall
+
+SIFT_app = data_SIFT[index[1:ntrain],] # création du jeu d'apprentissage
+SIFT_test = data_SIFT[index[(ntrain+1):(ntrain+ntest)],] # création du jeu de test
+print(nrow(SIFT_app))
+print(nrow(SIFT_test))
+
+# -----------------------------------------------
+# ---------- Construction de la foret (1 arbres)
+#------------------------------------------------
+
+labels = as.factor(SIFT_app$label)
+foret = randomForest(x = SIFT_app, y = labels, ntree = 1, norm.votes=FALSE)
+
+# ---------- Informations sur la forêt
+print(foret)
+
+# ---------- Calcul taux de bonnes classifications sur jeu d'apprentissage
+predictionsCorrectes = sum(predict(foret, SIFT_app)==SIFT_app$label)
+print("Taux de bonnes classifications jeu d'apprentissage")
+print(predictionsCorrectes/nrow(SIFT_app))
+
+# ---------- Calcul erreur empirique et réelle
+mauvaisesPredictions = sum(predict(foret, SIFT_app)!=SIFT_app$label)
+print("Erreur empirique")
+print(mauvaisesPredictions/nrow(SIFT_app))
+
+mauvaisesPredictions = sum(predict(foret, SIFT_test)!=SIFT_test$label)
+print("Erreur réelle")
+print(mauvaisesPredictions/nrow(SIFT_test))
+
+# -----------------------------------------------
+# ---------- Construction de la foret (n arbres)
+#------------------------------------------------
+
+nbTree <- c(2,3,4,5,6,7,8,9,10,30,50,100)
+for(n in nbTree) {
+  print("Nombre d'arbres")
+  print(n)
+  foret = randomForest(x = SIFT_app, y = labels, ntree = n, norm.votes=FALSE)
+  
+  # ---------- Calcul erreur empirique et réelle
+  mauvaisesPredictions = sum(predict(foret, SIFT_app)!=SIFT_app$label)
+  print("Erreur empirique")
+  print(mauvaisesPredictions/nrow(SIFT_app))
+  
+  mauvaisesPredictions = sum(predict(foret, SIFT_test)!=SIFT_test$label)
+  print("Erreur réelle")
+  print(mauvaisesPredictions/nrow(SIFT_test))
+}
