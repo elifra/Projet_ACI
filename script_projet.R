@@ -191,6 +191,7 @@ data_histoRGB = read.table("./data_Projet/descripteur_histoRGB.txt", header = T)
 table(data_histoRGB$label)
 
 # ---------- Separation Apprentissage/Validation/Test
+
 nall = nrow(data_histoRGB) #total number of rows in data
 ntrain = floor(0.7 * nall) # number of rows for train: 70% (vous pouvez changer en fonction des besoins)
 ntest = nall - ntrain # number of rows for test: le reste
@@ -205,8 +206,21 @@ print(nrow(histoRGB_test))
 
 # ---------- Construction de la foret (3 arbres)
 labels = as.factor(histoRGB_app$label)
-foret = randomForest(x = histoRGB_app, y = labels, ntree = 3, norm.votes=FALSE)
+foret = randomForest(x = histoRGB_app, y = labels, ntree = 1, norm.votes=FALSE)
+
+# ---------- Informations sur la forêt
 print(foret)
-foret$predicted
-foret$votes
-foret$oob.times
+
+# ---------- Calcul taux de bonnes classifications sur jeu d'apprentissage
+predictionsCorrectes = sum(predict(foret, histoRGB_app)==histoRGB_app$label)
+print("Taux de bonnes classifications jeu d'apprentissage")
+print(predictionsCorrectes/nrow(histoRGB_app))
+
+# ---------- Calcul erreur empirique et réelle
+mauvaisesPredictions = sum(predict(foret, histoRGB_app)!=histoRGB_app$label)
+print("Erreur empirique")
+print(mauvaisesPredictions/nrow(histoRGB_app))
+
+mauvaisesPredictions = sum(predict(foret, histoRGB_test)!=histoRGB_test$label)
+print("Erreur réelle")
+print(mauvaisesPredictions/nrow(histoRGB_test))
